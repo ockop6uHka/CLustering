@@ -43,13 +43,15 @@ void merge_clusters(Cluster *clusters, int c1, int c2, int *cluster_count) {
 
     free(clusters[c2].points);
     
-    clusters[c2] = clusters[*cluster_count - 1];  
+    for (int i = c2; i < *cluster_count - 1; i++) {
+        clusters[i] = clusters[i + 1];
+    } 
     
     (*cluster_count)--;  
 }
 
 void print_cluster_points(Point *points, Cluster cluster) {
-    printf("Координаты точек: ");
+    printf("Координаты объединённых групп точек: ");
     for (int i = 0; i < cluster.size; i++) {
         printf("(%.1f, %.1f) ", points[cluster.points[i]].x, points[cluster.points[i]].y);
     }
@@ -83,12 +85,13 @@ void agglomerative_clustering(Point *points, int n) {
             }
         }
 
-        printf("Шаг %d: объединяем кластеры %d и %d      %d\n", step++, c1, c2, cluster_count);
-        printf("Кластер %d: ", c1);
+        printf("Шаг %d: объединяем кластеры %d и %d\n", step++, c1, c2);
         print_cluster_points(points, clusters[c1]);
-        printf("Кластер %d: ", c2);
         print_cluster_points(points, clusters[c2]);
+
         merge_clusters(clusters, c1, c2, &cluster_count);
+
+        
     }
 
     for (int i = 0; i < cluster_count; i++) {

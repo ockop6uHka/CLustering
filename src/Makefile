@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -std=c11 
+CFLAGS = -Wall -Werror -Wextra -std=c11
 SRC = main.c clustering.c
 OBJ = main.o clustering.o
 TARGET = clustering
@@ -16,6 +16,6 @@ clustering.o: clustering.c clustering.h
 	$(CC) $(CFLAGS) -c clustering.c -o clustering.o
 
 clean:
-	rm -f $(OBJ) $(TARGET)
+	del /F /Q $(OBJ) $(TARGET)
 
 .PHONY: all clean
